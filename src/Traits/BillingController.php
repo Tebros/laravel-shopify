@@ -27,18 +27,18 @@ trait BillingController
     /**
      * Redirects to billing screen for Shopify.
      *
-     * @param int|null    $plan        The plan's ID, if provided in route.
      * @param Request     $request     The request object.
      * @param ShopQuery    $shopQuery    The shop querier.
      * @param GetPlanUrl  $getPlanUrl  The action for getting the plan URL.
+     * @param int|null    $plan        The plan's ID, if provided in route.
      *
      * @return ViewView
      */
     public function index(
-        ?int $plan = null,
         Request $request,
         ShopQuery $shopQuery,
-        GetPlanUrl $getPlanUrl
+        GetPlanUrl $getPlanUrl,
+        ?int $plan = null
     ): ViewView {
         // Get the shop
         $shop = $shopQuery->getByDomain(ShopDomain::fromNative($request->get('shop')));
@@ -59,18 +59,18 @@ trait BillingController
     /**
      * Processes the response from the customer.
      *
-     * @param int          $plan         The plan's ID.
      * @param Request      $request      The HTTP request object.
      * @param ShopQuery    $shopQuery    The shop querier.
      * @param ActivatePlan $activatePlan The action for activating the plan for a shop.
+     * @param int          $plan         The plan's ID.
      *
      * @return RedirectResponse
      */
     public function process(
-        int $plan,
         Request $request,
         ShopQuery $shopQuery,
-        ActivatePlan $activatePlan
+        ActivatePlan $activatePlan,
+        int $plan
     ): RedirectResponse {
         // Get the shop
         $shop = $shopQuery->getByDomain(ShopDomain::fromNative($request->query('shop')));
